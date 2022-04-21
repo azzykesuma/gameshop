@@ -11,8 +11,8 @@ import {
 
 export const getStaticProps = async() => {
   const client = createClient({
-    space : process.env.CONTENTFUL_SPACE_ID,
-    accessToken : process.env.CONTENTFUL_SPACE_TOKEN
+    space : 'jdnolxh774dq',
+    accessToken : '0gaM9ZkTUPE4TLOY1z3d8-7GMPHaAqAmMGCT-hWAGBE'
   })
 
   const res = await client.getEntries({content_type : 'game'})
