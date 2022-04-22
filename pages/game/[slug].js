@@ -1,5 +1,7 @@
 import { createClient } from "contentful";
-import Image from 'next/image'
+import Image from 'next/image';
+import { Container,Box, Typography } from '@mui/material';
+import styles from '../../styles/Data.module.css';
 
 const client = createClient({
     space: "jdnolxh774dq",
@@ -27,6 +29,7 @@ export const getStaticProps = async({ params }) => {
         'fields.slug': params.slug
     })
 
+
     if(!items.length) {
         return {
             redirect : {
@@ -44,16 +47,90 @@ export const getStaticProps = async({ params }) => {
 
 
 const Game = ({ game }) => {
-    console.log(game);
-    const { image, gameTitle,price} = game.fields
+    
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'IDR',
+      });
+    //   reduce the formatted price by 10%
+    const { image, gameTitle,price,imageAddOn,promo} = game.fields
+    var discountedPrice = formatter.format(price * 0.9)
+
     return (    
-        <>
-            <Image 
-            src={'https:' + image.fields.file.url}
-            width={'500px'}
-            height={'300px'}
-            />
-        </>
+        <Container
+        maxWidth="lg"
+        sx={{
+            margin : '20px',
+            justifyContent : 'center',
+            display : 'flex',
+            flexDirection : 'column',
+        }}
+        >
+            <Box
+            sx={{
+                display: 'grid',
+                gridTemplateColumns : 'repeat(3,200px)',
+                gap : '10px',
+                justifyContent : 'center',
+                marginBottom : '20px'
+            }}
+            >
+                <Box
+                sx={{
+                    gridRow : '1/3',
+                }}
+                >
+                    <Image 
+                    src={'https:' + image.fields.file.url}
+                    width={'500px'}
+                    height={'700px'}
+                    alt={gameTitle}
+                    />
+                </Box>
+                <Box>
+                    <Image 
+                    src={'https:' + imageAddOn[0].fields.file.url}
+                    width={'300px'}
+                    height={'200px'}
+                    alt={gameTitle}
+                    />
+                </Box>
+                <Box>
+                    <Image 
+                    src={'https:' + imageAddOn[1].fields.file.url}
+                    width={'300px'}
+                    height={'200px'}
+                    alt={gameTitle}
+                    />
+                </Box>
+                <Box>
+                    <Image 
+                    src={'https:' + imageAddOn[2].fields.file.url}
+                    width={'300px'}
+                    height={'200px'}
+                    alt={gameTitle}
+                    />
+                </Box>
+                <Box>
+                    <Image 
+                    src={'https:' + imageAddOn[3].fields.file.url}
+                    width={'300px'}
+                    height={'200px'}
+                    alt={gameTitle}
+                    />
+                </Box>
+            </Box>
+            <Box
+            sx={{
+                width : '500px',
+                alignSelf : 'center',
+            }}
+            >
+                <Typography>{gameTitle}</Typography>
+                { promo ? discountedPrice : <Typography>{formatter.format(price)}</Typography> 
+            }
+            </Box>
+        </Container>
     );
 }
  
