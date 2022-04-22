@@ -1,7 +1,14 @@
 import { createClient } from "contentful";
 import Image from 'next/image';
-import { Container,Box, Typography } from '@mui/material';
-import styles from '../../styles/Data.module.css';
+import {
+     Container,
+     Box,
+     Typography,
+     Button,
+     Stack
+     } from '@mui/material';
+
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const client = createClient({
     space: "jdnolxh774dq",
@@ -126,10 +133,33 @@ const Game = ({ game }) => {
                 alignSelf : 'center',
             }}
             >
-                <Typography>{gameTitle}</Typography>
-                { promo ? discountedPrice : <Typography>{formatter.format(price)}</Typography> 
-            }
+                <Typography
+                sx={{
+                    color : '#4B7BE5',
+                    fontSize : '2em',
+                    fontWeight : '700'
+                }}
+                >
+                    {gameTitle}
+                </Typography>
+                { promo ? <Typography sx={{fontSize : '1.5em'}}>{discountedPrice}</Typography> : <Typography  sx={{fontSize : '1.5em'}}>{formatter.format(price)}</Typography> }
+                <Typography>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, inventore.</Typography>
             </Box>
+            <Stack 
+            direction='row'
+            gap="10px"
+            sx={{
+                transform : 'translateX(16.7em)',
+                width : '300px',
+                marginTop : '20px',
+            }}
+            >
+                <Button variant="contained">Buy Now</Button>
+                <Button
+                variant="contained"
+                endIcon={<AddShoppingCartIcon />}
+                >Add to Wish List</Button>
+            </Stack>
         </Container>
     );
 }
